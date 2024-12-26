@@ -2,12 +2,14 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
-import { engine } from 'express-handlebars';
+import fs from 'fs';
 import morgan from 'morgan';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
+import YAML from 'yaml';
 import connection from './config/connect.js';
 import routes from './routers/index.js';
+import swaggerUI from 'swagger-ui-express';
 
 const app = express();
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -21,16 +23,6 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(morgan('dev'));
-
-// template engine
-app.engine(
-	'hbs',
-	engine({
-		extname: '.hbs',
-	})
-);
-app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, 'resources/views'));
 
 // routes
 routes(app);
