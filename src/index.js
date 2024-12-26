@@ -36,10 +36,9 @@ app.set('views', path.join(__dirname, 'resources/views'));
 routes(app);
 //
 
-// const file = fs.readFileSync('./swagger.yaml', 'utf8');
-// const file = fs.readFileSync(path.join(__dirname, 'swagger.yaml'), 'utf8');
-// const swaggerDocument = YAML.parse(file);
-// app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+const file = fs.readFileSync(path.join(__dirname, 'swagger.yaml'), 'utf8');
+const swaggerDocument = YAML.parse(file);
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 app.listen(8080, () => {
 	console.log('Nodejs app is running on the port 8080');
