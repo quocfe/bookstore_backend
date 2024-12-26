@@ -17,7 +17,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 // static file
 app.use(express.static(path.join(__dirname, 'public')));
 //
-
+// update
 app.use(
 	cors({
 		origin: 'https://bookstore-frontend-wheat.vercel.app', // Thay bằng URL front-end của bạn
