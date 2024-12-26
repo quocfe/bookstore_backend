@@ -1,10 +1,11 @@
 openapi: 3.0.3
 info:
   title: Swagger BookStore
-  description: Book Store RestFullAPi
+  description: Book Store RestFullApi
   version: 1.0.11
 servers:
-  - url: http://localhost:3000/v1/api
+  - url: https://bookstore-backend-lovat.vercel.app/v1/api
+  # - url: http://localhost:8080/v1/api
 tags:
   - name: Auth
     description: Authentication
@@ -86,10 +87,7 @@ paths:
                       idUser: 2
                       username: quocnppd06999
                       email: quocnppd06999@edu.vn
-                      password: $2b$10$LF6wcimLYNj9kW.F/cM6eOQklwYroUHszUZvb0c6mC8Nve1AE14PC
                       isAdmin: false
-                      createdAt: 2023-11-10T03:10:25.000Z
-                      updatedAt: 2023-11-10T03:10:25.000Z
                       refreshToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjoiZmFsc2UiLCJpYXQiOjE3MDIxMTU2NzMsImV4cCI6MTcwNDcwNzY3M30.F27rp_zmARYIPdfUX-0fW5XZrFMUj6eIib7aEWBO7Zg
                       accessToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNBZG1pbiI6ImZhbHNlIiwiaWF0IjoxNzAyMTkyNzg0LCJleHAiOjE3MDIxOTI4MTR9.yXQstYR1Zh8LI_NQYQr6kozpFTlRDGYEZYXPmtUbP60
                   message:
@@ -127,6 +125,17 @@ paths:
 
         '403':
           description: Refresh token is not valid
+  /auth/logout:
+    post:
+      tags:
+        - Auth
+      operationId: Logout
+      description: Logout user
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Logout success
   /book:
     get:
       tags:

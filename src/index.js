@@ -18,7 +18,13 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 app.use(express.static(path.join(__dirname, 'public')));
 //
 
-app.use(cors());
+app.use(
+	cors({
+		origin: 'https://bookstore-frontend-wheat.vercel.app', // Thay bằng URL front-end của bạn
+		methods: ['GET', 'POST', 'PUT', 'DELETE'], // Các phương thức được phép
+		credentials: true, // Nếu bạn sử dụng cookie
+	})
+);
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.json());

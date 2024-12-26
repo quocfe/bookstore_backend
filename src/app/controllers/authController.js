@@ -36,7 +36,7 @@ const authController = {
 			{ id: user.idUser, isAdmin: user.isAdmin },
 			process.env.ACCESS_TOKEN_SECRET,
 			{
-				expiresIn: '10s',
+				expiresIn: '1d',
 			}
 		);
 	},
@@ -54,29 +54,28 @@ const authController = {
 	// LOGIN
 	login: async (req, res, next) => {
 		try {
-			const user = await User.selectOne({
+			const result = await User.selectOne({
 				username: req.body.username,
 			});
 
-			if (!user[0]) {
+			const [user] = result;
+
+			if (!user) {
 				return res.status(404).json('Incorrect username');
 			}
-			const isPassword = await bcrypt.compare(
-				req.body.password,
-				user[0].password
-			);
+			const isPassword = await bcrypt.compare(req.body.password, user.password);
 
 			if (!isPassword) {
 				return res.status(404).json('Incorrect password');
 			}
 
-			const accessToken = authController.generateAccessToken(user[0]);
-			const refreshToken = authController.generateRefreshToken(user[0]);
+			const accessToken = authController.generateAccessToken(user);
+			const refreshToken = authController.generateRefreshToken(user);
 
-			await User.updateRefeshToken(refreshToken, user[0].idUser);
-
+			await User.updateRefeshToken(refreshToken, user.idUser);
+			const { password, updatedAt, createdAt, ...rest } = user;
 			const newUser = {
-				...user[0],
+				...rest,
 				refreshToken: refreshToken,
 				accessToken: accessToken,
 			};
@@ -112,7 +111,7 @@ const authController = {
 	//LOG OUT
 	logOut: async (req, res) => {
 		await User.updateRefeshToken(userArr.idUser, null);
-		res.status(200).json('Logged out successfully!');
+		res.status(200).json('Log out successfully!');
 	},
 };
 

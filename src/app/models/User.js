@@ -38,7 +38,7 @@ const User = {
 		}
 	},
 	selectAll: async () => {
-		const sql = 'SELECT * FROM users';
+		const sql = 'SELECT * FROM users ';
 
 		try {
 			const results = await executeQuery(sql);
