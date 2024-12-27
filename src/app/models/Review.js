@@ -29,7 +29,13 @@ const Review = {
 	},
 
 	selectAll: async (limit, offset) => {
-		const sql = `SELECT * FROM review limit ? offset ?`;
+		// const sql = `SELECT * FROM review limit ? offset ?`;
+		const sql = `
+			SELECT review.*, books.nameProduct, users.username, books.images, books.sortDescription 
+			FROM review 
+			JOIN books ON review.idProduct = books.idProduct 
+			JOIN users ON review.idUser = users.idUser  
+			LIMIT ? OFFSET ?`;
 
 		try {
 			const results = await executeQuery(sql, [+limit, +offset]);
@@ -96,6 +102,22 @@ const Review = {
 	},
 	countTotal: async () => {
 		const sql = `SELECT count(*) as count FROM review `;
+
+		try {
+			const results = await executeQuery(sql);
+			return results;
+		} catch (error) {
+			throw error;
+		}
+	},
+	topReview: async () => {
+		const sql = `
+			SELECT review.*, books.nameProduct, users.username, books.images, books.sortDescription 
+			FROM review 
+			JOIN books ON review.idProduct = books.idProduct 
+			JOIN users ON review.idUser = users.idUser  
+			ORDER BY review.view DESC LIMIT 5;
+		`;
 
 		try {
 			const results = await executeQuery(sql);

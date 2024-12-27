@@ -8,7 +8,7 @@ const reviewController = {
 
 			const reviews = await Review.selectAll(limit, offset);
 			const [totaPageData] = await Review.countTotal();
-			console.log('totaPageData', totaPageData);
+
 			const totalPage = Math.ceil(+totaPageData?.count / limit);
 
 			res.status(200).json({
@@ -94,6 +94,15 @@ const reviewController = {
 		try {
 			await Review.updateView(id);
 			res.status(200).json('view update');
+		} catch (error) {
+			res.status(500).json(error);
+		}
+	},
+
+	topReview: async (req, res) => {
+		try {
+			const reviews = await Review.topReview();
+			res.status(200).json(reviews);
 		} catch (error) {
 			res.status(500).json(error);
 		}

@@ -3,6 +3,8 @@ import reviewController from './../app/controllers/reviewController.js';
 
 const router = express.Router();
 
+// top5
+router.get('/top5', reviewController.topReview);
 // view
 router.get('/view/:id', reviewController.updateView);
 // selectByBook
