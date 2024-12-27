@@ -20,11 +20,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 // update
 app.use(
 	cors({
-		origin: 'https://bookstore-frontend-wheat.vercel.app', // Thay bằng URL front-end của bạn
+		origin: [
+			'http://localhost:5173',
+			'https://bookstore-frontend-wheat.vercel.app',
+		], // Thay bằng URL front-end của bạn
 		methods: ['GET', 'POST', 'PUT', 'DELETE'], // Các phương thức được phép
 		credentials: true, // Nếu bạn sử dụng cookie
 	})
 );
+//bookstore-backend-lac.vercel.app
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.json());
