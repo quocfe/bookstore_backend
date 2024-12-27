@@ -46,7 +46,7 @@ const Review = {
 	},
 
 	selectOne: async (id) => {
-		const sql = `SELECT * FROM review WHERE idReview = ?`;
+		const sql = `SELECT * FROM review WHERE idProduct = ?`;
 
 		try {
 			const results = await executeQuery(sql, [id]);
