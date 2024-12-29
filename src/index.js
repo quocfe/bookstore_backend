@@ -13,6 +13,7 @@ import swaggerUI from 'swagger-ui-express';
 
 const app = express();
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const port = process.env.PORT || 8080;
 
 // static file
 app.use(express.static(path.join(__dirname, 'public')));
@@ -42,7 +43,7 @@ const file = fs.readFileSync(path.join(__dirname, 'swagger.yaml'), 'utf8');
 const swaggerDocument = YAML.parse(file);
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
-app.listen(8080, () => {
+app.listen(port, () => {
 	console.log('Nodejs app is running on the port 8080');
 	connection.connect((err) => {
 		if (err) {
