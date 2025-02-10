@@ -8,6 +8,7 @@ const connection = mysql.createConnection({
 	password: process.env.DB_PASSWORD,
 	database: process.env.DB_DATABASENAME,
 	port: process.env.DB_PORT,
+	ssl: { rejectUnauthorized: false }, // Thêm SSL option
 });
 
 export default connection;
